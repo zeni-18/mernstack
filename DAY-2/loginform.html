@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login Form</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 12px;
+            font-weight: normal;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .login-box button.secondary {
+            background: #2196F3;
+            margin-top: 8px;
+        }
+
+        .login-box button:hover {
+            filter: brightness(0.95);
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .hidden { display: none; }
+
+        .error { color: #b00020; font-size: 13px; margin-top: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="login-box" id="container">
+    <!-- Login view -->
+    <div id="loginView">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input id="loginUsername" type="text" placeholder="Username" autocomplete="username">
+            <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password">
+            <div class="error" id="loginError" aria-live="polite"></div>
+            <button type="submit">Sign In</button>
+        </form>
+        <button class="secondary" id="showSignupBtn">Create account</button>
+        <p class="muted">This is a simple login form.</p>
+    </div>
+
+    <!-- Signup view -->
+    <div id="signupView" class="hidden">
+        <h2>Create Account</h2>
+        <form id="signupForm">
+            <input id="signupUsername" type="text" placeholder="Choose username" autocomplete="username">
+            <input id="signupPassword" type="password" placeholder="Choose password" autocomplete="new-password">
+            <div class="error" id="signupError" aria-live="polite"></div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <button class="secondary" id="showLoginBtn">Back to Sign In</button>
+        <p class="muted">Password is stored locally for this demo only.</p>
+    </div>
+
+    <!-- Welcome view -->
+    <div id="welcomeView" class="hidden">
+        <h2 id="welcomeHeading">Welcome</h2>
+        <p class="muted" id="welcomeText">Welcome to Simple login form</p>
+        <button id="logoutBtn">Log out</button>
+    </div>
+</div>
+
+<script>
+    // Simple client-side auth demo using localStorage
+    const loginView = document.getElementById('loginView');
+    const signupView = document.getElementById('signupView');
+    const welcomeView = document.getElementById('welcomeView');
+
+    const showSignupBtn = document.getElementById('showSignupBtn');
+    const showLoginBtn = document.getElementById('showLoginBtn');
+
+    function show(view) {
+        loginView.classList.toggle('hidden', view !== 'login');
+        signupView.classList.toggle('hidden', view !== 'signup');
+        welcomeView.classList.toggle('hidden', view !== 'welcome');
+    }
+
+    // Persist a single user record under 'simpleLoginUser'
+    function saveUser(username, password) {
+        const user = { username: username.trim(), password };
+        localStorage.setItem('simpleLoginUser', JSON.stringify(user));
+    }
+
+    function getUser() {
+        try {
+            return JSON.parse(localStorage.getItem('simpleLoginUser')) || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function clearError(el) { el.textContent = ''; }
+    function setError(el, msg) { el.textContent = msg; }
+
+    // Signup handler
+    document.getElementById('signupForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const u = document.getElementById('signupUsername').value;
+        const p = document.getElementById('signupPassword').value;
+        const err = document.getElementById('signupError');
+        clearError(err);
+        if (!u || !p) { setError(err, 'Enter username and password'); return; }
+        const existing = getUser();
+        if (existing && existing.username === u.trim()) {
+            setError(err, 'Username already exists (demo stores one user).');
+            return;
+        }
+        saveUser(u, p);
+        // show success then redirect to login view
+        setError(err, 'Account created — redirecting to Sign In...');
+        setTimeout(() => {
+            document.getElementById('signupForm').reset();
+            show('login');
+        }, 900);
+    });
+
+    // Login handler
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const u = document.getElementById('loginUsername').value;
+        const p = document.getElementById('loginPassword').value;
+        const err = document.getElementById('loginError');
+        clearError(err);
+        if (!u || !p) { setError(err, 'Enter username and password'); return; }
+        const stored = getUser();
+        if (!stored) { setError(err, 'No account found. Create one first.'); return; }
+        if (stored.username === u.trim() && stored.password === p) {
+            // success
+            show('welcome');
+            document.getElementById('welcomeHeading').textContent = `Welcome, ${stored.username}`;
+            document.getElementById('welcomeText').textContent = 'Welcome to Simple login form';
+            document.getElementById('loginForm').reset();
+        } else {
+            setError(err, 'Invalid username or password');
+        }
+    });
+
+    // Navigation buttons
+    showSignupBtn.addEventListener('click', () => { clearError(document.getElementById('loginError')); show('signup'); });
+    showLoginBtn.addEventListener('click', () => { clearError(document.getElementById('signupError')); show('login'); });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        show('login');
+    });
+
+    // Initialize view
+    show('login');
+</script>
+
+</body>
+</html>
