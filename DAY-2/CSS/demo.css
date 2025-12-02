@@ -1,0 +1,43 @@
+.one{
+    color:cornflowerblue;
+    background-color: rgb(74, 33, 4);
+    text-align: center;
+}
+.second{
+    color: rgba(8, 69, 99, 0.941);
+    background-color: rgb(222, 231, 231);
+    text-align: center;
+}
+h1{
+    color: rgb(225, 216, 216);
+    background-color: rgb(187, 18, 190);
+    text-align: center;
+}
+div{
+    color: aqua;
+    background:rebeccapurple;
+    text-align: center;
+}
+span{
+    color: red;
+    font-size: 20px;
+}
+.third{
+    border-left: 5px;
+    border-style: ridge;
+}
+.four{
+    border-radius: 10px;
+    border-style: dashed;
+}
+.five{
+    border-width:50px;
+    border-style: inset;
+}
+.six{
+    border-color: blue;
+    border-bottom:5px;
+    border-style: double;
+    border-radius:45px;
+}
+
