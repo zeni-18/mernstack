@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Webpage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f8cdda, #1d2b64);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      width: 380px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      color: #333;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 12px 15px;
+      margin-top: 12px;
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      background: #ffffff;
+      color: #2575fc;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e0e0e0;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+
+    <!-- LOGIN PAGE -->
+    <div id="loginPage">
+      <h2>Login</h2>
+      <input type="text" id="username" placeholder="Enter your name" style="width:100%; padding:12px; border-radius:8px; border:none; margin-bottom:10px;" />
+      <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <!-- QUIZ PAGE -->
+    <div id="quizPage" class="hidden">
+      <h2 id="questionText"></h2>
+      <div id="options"></div>
+      <button onclick="nextQuestion()" id="nextBtn" class="hidden">Next</button>
+    </div>
+
+    <!-- SCORE PAGE -->
+    <div id="scorePage" class="hidden">
+      <h2>Your Score:</h2>
+      <h1 id="scoreText"></h1>
+    </div>
+
+  </div>
+
+<script>
+  const questions = [
+    {
+      question: "What is the capital of France?",
+      options: ["Berlin", "Paris", "Rome", "Madrid"],
+      answer: 1
+    },
+    {
+      question: "Which planet is known as the Red Planet?",
+      options: ["Earth", "Mars", "Venus", "Jupiter"],
+      answer: 1
+    },
+    {
+      question: "What is 2 + 2?",
+      options: ["3", "4", "5", "6"],
+      answer: 1
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+  let selectedOption = null;
+
+  function startQuiz() {
+    let name = document.getElementById('username').value;
+    if (name.trim() === "") {
+      alert("Please enter a name");
+      return;
+    }
+
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('quizPage').classList.remove('hidden');
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const q = questions[currentQuestion];
+    document.getElementById('questionText').innerText = q.question;
+
+    const optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach((opt, index) => {
+      let btn = document.createElement('button');
+      btn.innerText = opt;
+      btn.onclick = () => selectOption(index, btn);
+      optionsDiv.appendChild(btn);
+    });
+
+    document.getElementById('nextBtn').classList.add('hidden');
+    selectedOption = null;
+  }
+
+  function selectOption(index, btn) {
+    selectedOption = index;
+    const buttons = [...document.querySelectorAll('#options button')];
+
+    // reset all buttons
+    buttons.forEach(b => b.style.background = '#ffffff');
+
+    // only clicked button colored
+    btn.style.background = index === questions[currentQuestion].answer ? 'green' : 'red';
+
+    document.getElementById('nextBtn').classList.remove('hidden');
+  }
+
+
+
+  function nextQuestion() {
+    if (selectedOption === questions[currentQuestion].answer) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      showScore();
+    }
+  }
+
+  function showScore() {
+    document.getElementById('quizPage').classList.add('hidden');
+    document.getElementById('scorePage').classList.remove('hidden');
+    document.getElementById('scoreText').innerText = score + " / " + questions.length;
+  }
+</script>
+
+</body>
+</html>

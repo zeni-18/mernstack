@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Simple Quiz</h1>
+
+<form id="quizForm">
+
+    <div class="question">
+        <p>1. What is the capital of France?</p>
+        <label><input type="radio" name="q1" value="0"> London</label><br>
+        <label><input type="radio" name="q1" value="0"> Berlin</label><br>
+        <label><input type="radio" name="q1" value="1"> Paris</label><br>
+        <label><input type="radio" name="q1" value="0"> Madrid</label>
+    </div>
+
+    <div class="question">
+        <p>2. Which planet is known as the Red Planet?</p>
+        <label><input type="radio" name="q2" value="0"> Earth</label><br>
+        <label><input type="radio" name="q2" value="1"> Mars</label><br>
+        <label><input type="radio" name="q2" value="0"> Jupiter</label><br>
+        <label><input type="radio" name="q2" value="0"> Venus</label>
+    </div>
+
+    <div class="question">
+        <p>3. Who wrote "Romeo and Juliet"?</p>
+        <label><input type="radio" name="q3" value="0"> Charles Dickens</label><br>
+        <label><input type="radio" name="q3" value="0"> Mark Twain</label><br>
+        <label><input type="radio" name="q3" value="1"> William Shakespeare</label><br>
+        <label><input type="radio" name="q3" value="0"> Jane Austen</label>
+    </div>
+
+    <button type="button" onclick="checkQuiz()">Submit</button>
+
+</form>
+
+<div id="result"></div>
+
+<script>
+function checkQuiz() {
+    let score = 0;
+    const totalQuestions = 3;
+
+    for (let i = 1; i <= totalQuestions; i++) {
+        const options = document.getElementsByName('q' + i);
+        for (let option of options) {
+            if (option.checked) {
+                score += parseInt(option.value);
+            }
+        }
+    }
+
+    document.getElementById('result').innerText = 
+        `You scored ${score} out of ${totalQuestions}`;
+}
+</script>
+
+</body>
+</html>
