@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopHub - Online Shopping Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>ShopHub</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="nav-icons">
+                    <div class="user-menu">
+                        <i class="fas fa-user"></i>
+                        <span>Account</span>
+                    </div>
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Menu -->
+    <div class="category-menu">
+        <div class="container">
+            <button class="category-btn active" data-category="all">All Products</button>
+            <button class="category-btn" data-category="electronics">Electronics</button>
+            <button class="category-btn" data-category="fashion">Fashion</button>
+            <button class="category-btn" data-category="books">Books</button>
+            <button class="category-btn" data-category="home">Home & Garden</button>
+            <button class="category-btn" data-category="sports">Sports</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to ShopHub</h1>
+            <p>Discover amazing products at great prices</p>
+            <button class="hero-btn">Shop Now</button>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <div class="filter-section">
+                    <h3>Filter by Price</h3>
+                    <input type="range" id="priceRange" min="0" max="10000" value="10000">
+                    <p>Price: $<span id="priceValue">10000</span></p>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Rating</h3>
+                    <label><input type="checkbox" class="rating-filter" value="5"> ⭐⭐⭐⭐⭐ 5 Stars</label>
+                    <label><input type="checkbox" class="rating-filter" value="4"> ⭐⭐⭐⭐ 4+ Stars</label>
+                    <label><input type="checkbox" class="rating-filter" value="3"> ⭐⭐⭐ 3+ Stars</label>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Availability</h3>
+                    <label><input type="checkbox" id="inStock" checked> In Stock Only</label>
+                </div>
+
+                <button class="clear-filters-btn" id="clearFilters">Clear Filters</button>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="products-section">
+                <div class="products-header">
+                    <h2 id="categoryTitle">All Products</h2>
+                    <select id="sortBy">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About ShopHub</h4>
+                    <p>Your one-stop shop for everything you need. Quality products, great prices, fast shipping.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ShopHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-btn" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Product">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-rating">
+                        <span id="modalRating"></span>
+                        <span id="modalReviews"></span>
+                    </div>
+                    <div class="modal-price">
+                        <span class="current-price" id="modalPrice"></span>
+                        <span class="original-price" id="modalOriginalPrice"></span>
+                        <span class="discount" id="modalDiscount"></span>
+                    </div>
+                    <p id="modalDescription"></p>
+                    <div class="modal-actions">
+                        <input type="number" id="quantityInput" value="1" min="1" max="10">
+                        <button class="add-to-cart-btn" id="addToCartBtn">Add to Cart</button>
+                    </div>
+                    <div class="modal-info">
+                        <p><strong>Availability:</strong> <span id="modalAvailability"></span></p>
+                        <p><strong>SKU:</strong> <span id="modalSKU"></span></p>
+                        <p><strong>Shipping:</strong> Free shipping on orders over $50</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Page (Hidden) -->
+    <div class="checkout-page" id="checkoutPage" style="display: none;">
+        <div class="container">
+            <h1>Checkout</h1>
+            <div class="checkout-content">
+                <div class="checkout-form">
+                    <h3>Shipping Address</h3>
+                    <form id="checkoutForm">
+                        <div class="form-row">
+                            <input type="text" placeholder="Full Name" required>
+                            <input type="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" placeholder="Street Address" required>
+                            <input type="text" placeholder="Apt/Suite (optional)">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" placeholder="City" required>
+                            <input type="text" placeholder="State/Province" required>
+                            <input type="text" placeholder="Zip/Postal Code" required>
+                        </div>
+                        <h3 style="margin-top: 20px;">Payment Method</h3>
+                        <div class="payment-options">
+                            <label><input type="radio" name="payment" value="card" checked> Credit/Debit Card</label>
+                            <label><input type="radio" name="payment" value="paypal"> PayPal</label>
+                            <label><input type="radio" name="payment" value="bank"> Bank Transfer</label>
+                        </div>
+                        <button type="submit" class="place-order-btn">Place Order</button>
+                        <button type="button" class="back-shopping-btn" id="backShoppingBtn">Back to Shopping</button>
+                    </form>
+                </div>
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutItems"></div>
+                    <div class="summary-total">
+                        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+                        <p><strong>Shipping:</strong> <span id="shipping">$0.00</span></p>
+                        <p><strong>Tax:</strong> <span id="tax">$0.00</span></p>
+                        <p class="total"><strong>Total:</strong> <span id="totalAmount">$0.00</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation (Hidden) -->
+    <div class="confirmation-page" id="confirmationPage" style="display: none;">
+        <div class="confirmation-content">
+            <i class="fas fa-check-circle"></i>
+            <h1>Order Confirmed!</h1>
+            <p>Thank you for your purchase. Your order has been placed successfully.</p>
+            <div class="confirmation-details">
+                <p><strong>Order Number:</strong> <span id="orderNumber"></span></p>
+                <p><strong>Total Amount:</strong> <span id="confirmedTotal"></span></p>
+                <p>You will receive a confirmation email shortly with tracking information.</p>
+            </div>
+            <button class="continue-shopping-btn" id="continueShoppingBtn">Continue Shopping</button>
+        </div>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
