@@ -18,7 +18,7 @@ import {useState}from 'react';
 import Child from './Child.jsx'
 export default function Parent() {
   const [count,setCount] = useState(0);
-  const increment = () => { setCount(count+1)}
+  const increment = () => { setCount(count+1000000)}
   return ( 
     <div>
         <h2>This is Parent component</h2>
@@ -32,4 +32,3 @@ export default function Parent() {
     </div>
   )
 }
-

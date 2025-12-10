@@ -55,7 +55,7 @@ function App() {
 
 export default App*/
 
-/*import React from 'react'
+import React from 'react'
 
 function App() {
   const productList = ['fruit','vegs','dairy'];
@@ -69,5 +69,6 @@ function App() {
     </>
   )
 }
-export default App*/
+
+export default App
 
