@@ -1,15 +1,1 @@
-h1{
-  text-align: center;
-}
-.o{
- position: relative ;
- left:1000px;
-}
-.i{
-  position: relative ;
- left:500px;
-}
-.l{
-  border-radius: 10%;
-
-}
+@import "tailwindcss";
